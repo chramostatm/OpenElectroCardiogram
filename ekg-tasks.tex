@@ -1,0 +1,150 @@
+\documentclass[12pt,fleqn]{article}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{fleqn}
+\usepackage[USenglish]{isodate}% http://ctan.org/pkg/isodate
+\usepackage[letterpaper,paperwidth=8.5in,paperheight=11in,margin=0.75in]{geometry} 
+\usepackage[USenglish]{babel}
+\usepackage{hyperref}
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
+\usepackage{tcolorbox}
+
+\usepackage{multirow}
+\usepackage[T1]{fontenc} 
+\usepackage[upright]{fourier}
+
+\usepackage{enumerate,isomath,hyperref}
+\usepackage{upgreek,comment}
+
+\usepackage{graphicx}
+%\usepackage[super]{nth}
+\usepackage{amsmath}
+
+\newenvironment{alphalist}{
+  \begin{enumerate}[(a)]
+    \addtolength{\itemsep}{-0.5\itemsep}}
+  {\end{enumerate}}
+  \cleanlookdateon% Remove ordinal day reference
+  \newcommand{\RomanNumeralCaps}[1]
+      {\MakeUppercase{\romannumeral #1}}
+
+
+      \usepackage{amstext} % for \text macro
+      \usepackage{array}   % for \newcolumntype macro
+      \newcolumntype{L}{>{$}l<{$}} % math-mode version of "l" column type
+      
+      \newcommand{\dom}{\mathrm{dom}} 
+      \newcommand{\range}{\mathrm{range}} 
+      \newcommand{\zero}{\mathrm{zero}} 
+      \newcommand{\reals}{\mathbf{R}} 
+      \newcommand{\integers}{\mathbf{Z}} 
+       \newcommand{\rationals}{\mathbf{Q}} 
+      \newcommand{\ssep}{\mid}
+      \newcommand{\arcsec}{\mathrm{arcsec}}
+      \newcommand{\arccsc}{\mathrm{arccsc}}
+      \newcommand{\arccot}{\mathrm{arccot}}
+      
+    \newcommand{\rand}{\mathrm{rand}}
+
+\newcommand\showdiv[1]{\overline{\smash{)}#1}}
+\usepackage{amsmath,amsthm}
+\theoremstyle{definition} %nonitalic defintions!
+\newtheorem{mydef}{Definition}
+\usepackage{scalerel,amssymb}
+\def\mcirc{\mathbin{\scalerel*{\circ}{j}}}
+\def\msquare{\mathord{\scalerel*{\Box}{gX}}}
+
+      
+      \title{EKG project}
+\begin{document}
+\maketitle
+
+\section*{Tasks}
+
+\begin{enumerate}
+
+\item[$\msquare$] If you don't have an Overleaf account (\url{https://www.overleaf.com/}), create one. You will use Overleaf to edit \TeX\/ files.
+
+\item[$\msquare$] If you have never used \TeX\/  or need a refresher course, ask me for learning resources.
+
+\item[$\msquare$] If you don't have a GitHub  account (\url{https://github.com/}), create one.  We'll be using
+GitHub instead of GitLab because it's possible to import \TeX files from GitHub into Overleaf. We'll at least I did it once.
+
+\item[$\msquare$] If you haven't used GitHub, ask me for some learning resources. 
+
+\item[$\msquare$]  Create a private project on GitHub for your URF project and invite me to be a member.
+
+\item[$\msquare$]  Upload this document into your GitHub project--you will update this document with your progress.
+
+
+\end{enumerate}
+
+\section*{Getting started finding the heart rate}
+
+I think that identifying the heart rate will be key for identifying other features of the EKG.  Thus given a sequence that is periodic or nearly periodic, we would like to be able to algorithmically
+ determine its period.  We start with a definition:
+
+\begin{mydef} Let  \(F\) be a  sequence.  If there is \(p \in \integers_{> 0}\) such that
+\[
+    (\forall k \in \integers_{\geq 0})(F_k = F_{k+p}),
+\]
+we say that the sequence \(F\) is periodic.  For a periodic sequence $F$, the least such integer $p$ is the \emph{period} of $F$.  \qed
+\end{mydef}
+For any sequence $F$ and some $N \in \integers_{>0}$, define a new sequence $\Phi$ by
+\[
+    \Phi = n \in \integers \mapsto \sum_{k=0}^{N-1}  \left(F_k - F_{k+n} \right)^2.
+\]
+Maybe we should give $\Phi$ a name, but not for now. We have $\range(\Phi) \subset [0, \infty)$. If $F$ is periodic with period $p$, we have
+\[
+   \Phi_p  = \sum_{k=0}^{N-1}  \left(F_k - F_{k+p} \right)^2 =  \sum_{k=0}^{N-1}  0  = 0.
+\]
+Since $\range(\Phi) \subset [0, \infty)$, we see that the sequence $\Phi$ has a local minimum at the period of $F$, namely at $p$. The
+same is true for any integer multiple of $p$; for example, we have
+\[
+   \Phi_{2p} = \sum_{k=0}^{N-1}  \left(F_k - F_{k+2p} \right)^2 =  \sum_{k=0}^{N-1}  0 = 0.
+\]
+So for any periodic sequence with period $p$, a graph of \(\Phi\) should have relative minimum at $p, 2p, 3 p, \dots$.  
+
+Given a sequence, we should be able to algorithmically identify the relative minimum in the graph of \(\Phi\), and by doing so, identify the period of the sequence.  Before we do this for EKG, data, let's try some toy problems.
+
+\section*{Tasks}
+
+\begin{enumerate}
+
+\item[$\msquare$]  Write a Julia function that takes as its input an array $F$, a positive integer $n$, and a positive integer $N$. (If you don't like the names of these variables, it won't hurt my feelings to change them). For a given integer $n$ and $N$, the  Julia function should return the sum
+\[
+    \sum_{k=0}^{N-1}  \left(F_k - F_{k+n} \right)^2.
+\]
+OK, Julia arrays are one-based, not zero based, so maybe make this
+\[
+    \sum_{k=1}^{N}  \left(F_k - F_{k+n} \right)^2.
+\]
+instead.
+
+\item[$\msquare$]  Create some periodic sequences $F$ and have Julia plot the function  $ n \in \integers \mapsto \sum_{k=0}^{N-1}  \left(F_k - F_{k+n} \right)^2\).
+Here are some sequences to test:
+
+\begin{alphalist}
+
+\item $F_k = \arcsin \left (\sin(\frac{2 \uppi k}{100}) \right)$. This function has period 100. Try values of $N$ that are 100 or larger.  The graph of $ n \in \integers \mapsto \sum_{k=0}^{N-1}  \left(F_k - F_{k+n} \right)^2\) should show  minima at 100, 200, 300, \dots. Does it?  Look at the graph for several values of $N$. Making $N$ larger does what to the graph?
+(The sequence $F$ is amusing by itself--be sure to graph just $F$.)
+
+\item $F_k = \cos{\left( \frac{\ensuremath{\pi}  k}{50}\right) }+\sin{\left( \frac{\ensuremath{\pi}  k}{100}\right) }$. This function has period 200. Try values of $N$ that are 200 or larger.  The graph of $ n \in \integers \mapsto \sum_{k=0}^{N-1}  \left(F_k - F_{k+n} \right)^2\) should show  minima at 200, 400, 600, \dots. Does it?
+
+\end{alphalist}
+
+\item[$\msquare$]  Create some periodic sequences $F$ that are ``nearly periodic'' and have Julia plot the function  $ n \in \integers \mapsto \sum_{k=0}^{N-1}  \left(F_k - F_{k+n} \right)^2\). Here are some sequences to test:
+
+\begin{alphalist}
+\item $F_k = \arcsin \left (\sin(\frac{2 \uppi k}{100}) \right) + \rand(1/10)$, where $ \mbox{rand}(1/10)$ is a random number in the interval $[-1/10, 1/10]$. 
+The graph of $ n \in \integers \mapsto \sum_{k=0}^{N-1}  \left(F_k - F_{k+n} \right)^2\) should show  minima at 200, 400, 600, \dots. Does it?  The Julia language has
+good support for random numbers--I've forgotten most of what I once knew.
+
+
+\item $F_k = \cos{\left( \frac{\ensuremath{\pi}  k}{50}\right) }+\sin{\left( \frac{\ensuremath{\pi}  k}{100}\right)  + \rand(1/10) }$. This function has period 200. Try values of $N$ that are 200 or larger.  The graph of $ n \in \integers \mapsto \sum_{k=0}^{N-1}  \left(F_k - F_{k+n} \right)^2\) should show  minima at 200, 400, 600, \dots. Does it?
+
+\item Try increasing the randomness--that is try things like $F_k = \arcsin \left (\sin(\frac{2 \uppi k}{100}) \right) + \rand(1/5)$. See what that does to your graphs. Do the graphs show minima at t 200, 400, 600, \dots?
+\end{alphalist}
+
+\end{enumerate}
+\end{document}

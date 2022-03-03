@@ -1,4 +1,9 @@
 # EKGproject2021code
 This is a repository of all code for electrocardiogram (EKG) Analysis research done by Trenton Chramosta and Dr. Barton Willis
 
-Trenton should do this.
+## Collaboration
+As it stands, this repository is private. This will change once our initial research and developement is complete (i.e. Summer 2022). If you would like to contribute to this project before then, reach out to Trenton Chramosta via email chramostatm@lopers.unk.edu
+
+## TODO
+
+

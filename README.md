@@ -1,7 +1,15 @@
-# OpenEKG
-This is a repository of all code for electrocardiogram (EKG) Analysis research done by Trenton Chramosta and Dr. Barton Willis.
+# OpenElectroCardiogram
+## Project Background
+Initially a Hackathon Idea for [HackUNO2021](https://devpost.com/software/ekganalysistool). Later spawned into a research project in 2021-2022 with [Dr. Barton Willis](https://github.com/barton-willis).
 
-## Collaboration
+## Goal
+Utilize Julia and Numerical Analysis techniques to read and analyze EKGs/ECGs without the need for proprietary software.
+
+TODO:
+-  Expand file reading to use Open Standards such as: SCP-ECG, DICOM, and HL7 aECG
+-  Develop a better understanding of how technicians analyze ECGs in the field.
+  
+
 
 
 ## TODO

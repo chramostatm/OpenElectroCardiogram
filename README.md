@@ -1,6 +1,6 @@
 # OpenElectroCardiogram
 ## Project Background
-Initially a Hackathon Idea for [HackUNO2021](https://devpost.com/software/ekganalysistool). Later spawned into a research project in 2021-2022 with [Dr. Barton Willis](https://github.com/barton-willis).
+Initially a Hackathon Idea for [HackUNO2021](https://devpost.com/software/ekganalysistool). Later spawned into a research project during the 2021-2022 schoolyear with [Dr. Barton Willis](https://github.com/barton-willis).
 
 ## Goal
 Utilize Julia and Numerical Analysis techniques to read and analyze EKGs/ECGs without the need for proprietary software.
